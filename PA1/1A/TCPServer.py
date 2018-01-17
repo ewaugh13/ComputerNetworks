@@ -1,10 +1,13 @@
 from socket import *
 
-serverPort = 2100
-serverSocket = socket(AF_INET, SOCK_DGRAM)
-serverSocket.bind(('localhost', serverPort))
-print "The server is ready to receive"
+server_address = ('localhost', 2100)
+server_socket = socket(AF_INET, SOCK_STREAM)
+server_socket.bind(server_address)
+server_socket.listen(1)
+print 'The server is ready to receive'
 while 1:
-    message, clientAddress = serverSocket.recvfrom(2048)
-    modifiedMessage = message.upper()
-    serverSocket.sendto(modifiedMessage, clientAddress)
+    connection_socket, addr = server_socket.accept()
+    sentence = connection_socket.recv(1024)
+    capitalized_sentence = sentence.upper()
+    connection_socket.send(capitalized_entence)
+    connection_socket.close()
